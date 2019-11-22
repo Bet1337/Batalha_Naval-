@@ -76,7 +76,7 @@ destroyer = 3
 barco = 2
 boats = [porta_aviao, encouracado, submarino, destroyer, barco]
 titulo = ['Porta Aviões', 'Encouraçado', 'Submarino', 'Destroyer', 'Barco']
-imagem2 = 'R'
+imagem2 = chr(2017)
 imagem1 = 'O'
 
 
@@ -98,14 +98,14 @@ def cortella(direcao, l, c, tipo, tab, carac):
 
 
         else:
-            while tab1[l][c] == "R":
+            while tab1[l][c] == imagem2:
                 print("Este lugar já possui um barco")
                 l = int(input("Digite uma linha válida:"))
                 c = input("Digite uma coluna válida:").upper()
                 c=lista_aux.index(c)
-            tab[l][c] = carac
+            tab[l-1][c] = carac
             for i in range(tipo):
-                tab[l][c + i] = carac
+                tab[l-1][c + i] = carac
 
     elif direcao == 'V':
         for i in range(tipo):
@@ -118,14 +118,14 @@ def cortella(direcao, l, c, tipo, tab, carac):
             for i in range(tipo):
                 tab[l + i][c] = carac
         else:
-            while tab1[l][c] == "R":
+            while tab1[l][c] == imagem2:
                 print("Este lugar já tem um barco!!")
                 l = int(input("Digite uma linha válida:"))
                 c = input("Digite uma coluna válida:").upper()
                 c = lista_aux.index(c)
-            tab[l][c] = carac
+            tab[l-1][c] = carac
             for i in range(tipo):
-                tab[l + i][c] = carac
+                tab[l + i -1][c] = carac
 
 
 # Função para explodir os barcos(artilharia pesada)
@@ -149,15 +149,20 @@ for i in boats:
     kant(tab1)
     print('Posicione o %s de tamanho %dx1' % (titulo[contador], i))
     pitagoras = input("Em qual direção vc deseja jogar[V/H]:").upper()
-    parmenides = int(input("Qual a linha que vc desenha jogar:"))
+    parmenides = int(input("Qual a linha que vc deseja jogar:"))
     platao = input("Qual a coluna que vc deseja jogar:").upper()
     platao = lista_aux.index(platao)
     cortella(pitagoras, parmenides - 1, platao, i, tab1, imagem2)
     contador += 1
+
 leonboff(tab2, boats)
-kant(tab1)
+
+
 # Inputs para a Porrada:
 cont = 0
+print("ESTÁ NA HORA DE TACAR AS BOMBAS")
+print("Os [X] que aparecem no seu tabuleiro querem dizer que o adversário errou a bomba")
+print("Os [*] querem dizer que seu adversário acertou a bomba")
 
 while not jogo(tab2, imagem1) or not jogo(tab1, imagem2):
     a = int(input("Em qual linha vc quer jogar:"))
@@ -167,8 +172,9 @@ while not jogo(tab2, imagem1) or not jogo(tab1, imagem2):
     berkeley(tab1)
     kant(tab1)
     if jogo(tab2, imagem1):
-        print("Você ganhou!")
+        print("VOCÊ GANHOU!!!!")
+        kant(tab2)
         break
     if jogo(tab1, imagem2):
-        print("Você perdeu!")
+        print("VOCÊ PERDEU!")
         break
